@@ -1,4 +1,4 @@
-class DomManipulator {
+ class DomManipulator {
     static cellsConstruction(books) {
       document.getElementById("container").innerHTML = '';
       for (let i = 0; i < books.allBooks.length; i++) {
@@ -17,7 +17,7 @@ class DomManipulator {
         }
         this.createBookElement(divParent, book);
         span.addEventListener('click', function() {
-          BookmarkManager.clickOnIcon(span, book);
+          BookManager.clickOnIcon(span, book);
         });
         return divParent;
       }
@@ -53,7 +53,7 @@ class DomManipulator {
       }
       this.createBookElement(divParent, book);
       span.addEventListener('click', function() {
-        BookmarkManager.clickOnIcon(span, book);
+        BookManager.clickOnIcon(span, book);
       });
       return divParent;
     }
@@ -113,5 +113,3 @@ class DomManipulator {
       }
     }
   }
-  
-  export default DomManipulator;
