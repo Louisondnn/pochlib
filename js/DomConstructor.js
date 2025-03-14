@@ -1,4 +1,3 @@
-// DomConstructor.js
 class DomConstructor {
   
   constructor() {
@@ -18,6 +17,7 @@ class DomConstructor {
         searchButton.textContent = 'Rechercher';
         searchButton.id = 'bt_search';
         this.content.appendChild(searchButton);
+        this.addSearchButtonEventListener();
       }
     
       addSearchButtonEventListener() {
@@ -45,9 +45,9 @@ class DomConstructor {
       searchForm.appendChild(authorInput);
       this.content.appendChild(searchForm);
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', () => {
+
+  addDomElements() {
     const content = document.createElement('div');
     content.id = 'content';
     document.body.appendChild(content);
@@ -56,6 +56,9 @@ class DomConstructor {
     container.id = 'container';
     document.body.appendChild(container);
   
-    const domConstructor = new DomConstructor();
-    domConstructor.createSearchForm();
-  });
+    this.createSearchForm();
+    this.createSearchButton();
+  }
+}
+
+export default DomConstructor;

@@ -1,115 +1,68 @@
- class DomManipulator {
-    static cellsConstruction(books) {
-      document.getElementById("container").innerHTML = '';
-      for (let i = 0; i < books.allBooks.length; i++) {
-        var div = DomManipulator.cellConstruction('search', books.allBooks[i]);
-        document.getElementById("container").appendChild(div);
-      }
-    }
-    static cellConstruction(searchOrBookmark, book) {
-        var divParent = document.createElement("div");
-        divParent.classList.add("divparent");
-        if (searchOrBookmark == 'search') {
-          var span = this.iconCreation(divParent, 'search');
-        } else {
-          divParent.id = book.id;
-          var span = this.iconCreation(divParent, 'bookmark');
-        }
-        this.createBookElement(divParent, book);
-        span.addEventListener('click', function() {
-          BookManager.clickOnIcon(span, book);
-        });
-        return divParent;
-      }
-    static addSearchButton() {
+
+import Search from './Search.js';  
+
+class DomConstructor {
+  
+  constructor() {
+    this.myBooks = document.getElementById('myBooks');
+    this.content = document.createElement('div');
+    this.content.id = 'content';
+    if (document.body) {
+      document.body.appendChild(this.content);
+    } else {
+      console.error('L\'élément body n\'existe pas dans le DOM');
+    }  
+  }
+  
+    
+      createSearchButton() {
         const searchButton = document.createElement('button');
-        searchButton.textContent = 'Rechercher des livres';
-        searchButton.id = 'search-button';
-        document.getElementById('myBooks').appendChild(searchButton);
+        searchButton.textContent = 'Rechercher';
+        searchButton.id = 'bt_search';
+        this.content.appendChild(searchButton);
+        this.addSearchButtonEventListener();
       }
     
-      static addCancelButton() {
-        const cancelButton = document.createElement('button');
-        cancelButton.textContent = 'Annuler la recherche';
-        cancelButton.id = 'cancel-button';
-        document.getElementById('myBooks').appendChild(cancelButton);
+      addSearchButtonEventListener() {
+        const searchButton = document.getElementById('bt_search');
+        searchButton.addEventListener('click', function(event) {
+          Search.clickForSearch(event);
+        });
       }
-    
-      static addBookmarkButton() {
-        const bookmarkButton = document.createElement('button');
-        bookmarkButton.textContent = 'Marquer comme favori';
-        bookmarkButton.id = 'bookmark-button';
-        document.getElementById('myBooks').appendChild(bookmarkButton);
-      }
-  
-    static cellConstruction(searchOrBookmark, book) {
-      var divParent = document.createElement("div");
-      divParent.classList.add("divparent");
-      if (searchOrBookmark == 'search') {
-        var span = this.iconCreation(divParent, 'search');
+    createSearchForm() {
+      const searchForm = document.createElement('form');
+      const container = document.getElementById('container');
+      console.log(container); 
+        if (container) {
+        container.appendChild(searchForm);
       } else {
-        divParent.id = book.id;
-        var span = this.iconCreation(divParent, 'bookmark');
+        console.error('Le container n\'existe pas dans le DOM');
       }
-      this.createBookElement(divParent, book);
-      span.addEventListener('click', function() {
-        BookManager.clickOnIcon(span, book);
-      });
-      return divParent;
-    }
-  
-    static createBookElement(parent, book) {
-      parent.appendChild(this.componentCreation('h3', 'Titre', book.title));
-      parent.appendChild(this.componentCreation('i', 'Id', book.id));
-      parent.appendChild(this.componentCreation('p', 'Auteur', book.author));
-      parent.appendChild(this.componentCreation('p', 'Description', book.description));
-      parent.appendChild(this.componentCreation('img', '', book.image));
-    }
-  
-    static componentCreation(typeOfTag, entitled, elementbook) {
-      var creationTag = document.createElement(typeOfTag);
-      if (typeOfTag == 'img') {
-        creationTag.src = elementbook;
-        creationTag.setAttribute('class', 'image');
-      } else {
-        creationTag.textContent = entitled + " : " + elementbook;
-      }
-      return creationTag;
-    }
-  
-    static iconCreation(parent, searchOrBookmark) {
-      var span = document.createElement('span');
-      if (searchOrBookmark == 'search') {
-        span.setAttribute('class', 'fa fa-bookmark fa-2x iconstyle');
-      } else {
-        span.setAttribute('class', 'fa fa-trash fa-2x iconstyle');
-      }
-      parent.appendChild(span);
-      return span;
-    }
-  
-    static showHideSearchForm() {
-      if (form_search.style.display == 'none') {
-        form_search.style.display = "";
-      } else {
-        form_search.style.display = "none";
-      }
-    }
-  
-    static deleteEnteredData() {
-      document.getElementById("title_book").value = "";
-      document.getElementById("author").value = "";
-    }
-  
-    static setDescription(googleDescription) {
-      if (googleDescription != null) {
-        if (googleDescription.length <= 200) {
-          return googleDescription;
-        } else {
-          return googleDescription.substring(0, 200) + '...';
-        }
-      } else {
-        return 'Information manquante';
-      }
+      const titleInput = document.createElement('input');
+      const authorInput = document.createElement('input');
+      titleInput.id = 'title_book';
+      authorInput.id = 'author';
+      titleInput.placeholder = 'Titre du livre';
+      authorInput.placeholder = 'Auteur du livre';
+      searchForm.appendChild(titleInput);
+      searchForm.appendChild(authorInput);
+      this.content.appendChild(searchForm);
     }
   }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const content = document.createElement('div');
+    content.id = 'content';
+    document.body.appendChild(content);
+  
+    const container = document.createElement('div');
+    container.id = 'container';
+    document.body.appendChild(container);
+  
+    const domConstructor = new DomConstructor();
+    domConstructor.createSearchForm();
+    domConstructor.createSearchButton();
+  }); 
+
+
+
