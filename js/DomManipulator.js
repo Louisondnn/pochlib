@@ -29,6 +29,9 @@ class DomConstructor {
           Search.clickForSearch(event);
         });
       }
+      showHideSearchForm(){
+        
+      }
     createSearchForm() {
       const searchForm = document.createElement('form');
       const container = document.getElementById('container');

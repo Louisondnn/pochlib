@@ -1,3 +1,12 @@
+// que les Create et addListener
+// index.js button 
+// liste "resultats de recherche" button save 
+// liste Ma pochList avec  le button delete Session Storage 
+// add sessionStorage 
+
+
+
+
 class DomConstructor {
   
   constructor() {
@@ -10,6 +19,7 @@ class DomConstructor {
       console.error('L\'élément body n\'existe pas dans le DOM');
     }  
   }
+  
   
     
       createSearchButton() {
@@ -26,7 +36,18 @@ class DomConstructor {
           Search.clickForSearch(event);
         });
       }
+
+    
     createSearchForm() {
+      sessionStorage.setItem("clé", "valeur");
+      sessionStorage.getItem("clé");
+      var data = sessionStorage.getItem("clé");
+  
+      console.log(data);
+      console.log('test');
+
+      
+
       const searchForm = document.createElement('form');
       const container = document.getElementById('container');
       console.log(container); // Vérifiez 
@@ -48,6 +69,14 @@ class DomConstructor {
 
 
   addDomElements() {
+    sessionStorage.setItem("clé", "valeur");
+    sessionStorage.getItem("clé");
+    var data = sessionStorage.getItem("clé");
+
+    console.log(data);
+    console.log('test');
+
+
     const content = document.createElement('div');
     content.id = 'content';
     document.body.appendChild(content);
