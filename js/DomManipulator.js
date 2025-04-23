@@ -1,71 +1,99 @@
-
-import Search from './Search.js';  
-
-class DomConstructor {
-  
-  constructor() {
-    this.myBooks = document.getElementById('myBooks');
-    this.content = document.createElement('div');
-    this.content.id = 'content';
-    if (document.body) {
-      document.body.appendChild(this.content);
-    } else {
-      console.error('L\'élément body n\'existe pas dans le DOM');
-    }  
-  }
-  
-    
-      createSearchButton() {
-        const searchButton = document.createElement('button');
-        searchButton.textContent = 'Rechercher';
-        searchButton.id = 'bt_search';
-        this.content.appendChild(searchButton);
-        this.addSearchButtonEventListener();
-      }
-    
-      addSearchButtonEventListener() {
-        const searchButton = document.getElementById('bt_search');
-        searchButton.addEventListener('click', function(event) {
-          Search.clickForSearch(event);
-        });
-      }
-      showHideSearchForm(){
-        
-      }
-    createSearchForm() {
-      const searchForm = document.createElement('form');
-      const container = document.getElementById('container');
-      console.log(container); 
-        if (container) {
-        container.appendChild(searchForm);
-      } else {
-        console.error('Le container n\'existe pas dans le DOM');
-      }
-      const titleInput = document.createElement('input');
-      const authorInput = document.createElement('input');
-      titleInput.id = 'title_book';
-      authorInput.id = 'author';
-      titleInput.placeholder = 'Titre du livre';
-      authorInput.placeholder = 'Auteur du livre';
-      searchForm.appendChild(titleInput);
-      searchForm.appendChild(authorInput);
-      this.content.appendChild(searchForm);
+class DomManipulator {
+  static showHideSearchForm() {
+    const form = document.getElementById('divformsearch');
+    if (form) {
+      form.style.display = (form.style.display === 'none') ? 'block' : 'none';
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const content = document.createElement('div');
-    content.id = 'content';
-    document.body.appendChild(content);
+  static cancelSearch() {
+    const form = document.getElementById('divformsearch');
+    if (form) {
+      form.style.display = 'none';
+      const inputs = form.querySelectorAll('input');
+      inputs.forEach(input => input.value = '');
+    }
+  }
+
+  static getBooksFromSession() {
+    const books = sessionStorage.getItem('books');
+    return books ? JSON.parse(books) : [];
+  }
+
+  static saveBookToSession(book) {
+    let books = DomManipulator.getBooksFromSession();
+    books.push(book);
+    sessionStorage.setItem('books', JSON.stringify(books));
+  }
+
+  static showSearchElements() {
+    document.getElementById('divformsearch').style.display = 'block';
+    document.getElementById('bt_search').style.display = 'inline-block';
+    document.getElementById('bt_cancel').style.display = 'inline-block';
+    document.getElementById('bt_add').style.display = 'none';
+    document.getElementById('pochList').style.display = 'block';
+  }
+
+  static hideSearchElements() {
+    document.getElementById('divformsearch').style.display = 'none';
+    document.getElementById('bt_search').style.display = 'none';
+    document.getElementById('bt_cancel').style.display = 'none';
+    document.getElementById('bt_add').style.display = 'inline-block';
+    document.getElementById('pochList').style.display = 'block';
+
+  }
+  static renderPochList() {
+    const books = DomManipulator.getBooksFromSession();
   
-    const container = document.createElement('div');
-    container.id = 'container';
-    document.body.appendChild(container);
+    let container = document.getElementById('pochList');
   
-    const domConstructor = new DomConstructor();
-    domConstructor.createSearchForm();
-    domConstructor.createSearchButton();
-  }); 
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'pochList';
+  
+      const content = document.getElementById('content');
+      if (content) {
+        content.appendChild(container); // reste dans #content
+      }
+    }
+  
+    container.innerHTML = '<h3>Ma Poch\'List</h3>';
+  
+    const list = document.createElement('div');
+    list.className = 'poch-list-container';
+  
+    books.forEach(book => {
+      const item = document.createElement('div');
+      item.className = 'poch-list-item';
+  
+      item.innerHTML = `
+        <img src="${book.image}" alt="${book.title}" />
+        <div class="poch-list-info">
+          <h4>${book.title}</h4>
+          <p>${book.author}</p>
+        </div>
+        <button class="delete-btn">🗑️</button>
+      `;
+  
+      item.querySelector('.delete-btn').addEventListener('click', () => {
+        DomManipulator.deleteBook(book.id);
+      });
+  
+      list.appendChild(item);
+    });
+  
+    container.appendChild(list);
+  }
+  
+  
+  static deleteBook(id) {
+    let books = DomManipulator.getBooksFromSession();
+    books = books.filter(book => book.id !== id);
+    sessionStorage.setItem('books', JSON.stringify(books));
+    document.getElementById('pochList')?.remove();
+    DomManipulator.renderPochList();
+  }
+  
+}
 
-
-
+export default DomManipulator;

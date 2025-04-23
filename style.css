@@ -1,4 +1,4 @@
-/* 🌟 Style général */
+/* ===== Style général ===== */
 body {
     font-family: 'Droid Sans', sans-serif;
     margin: 0;
@@ -7,7 +7,23 @@ body {
     text-align: center;
 }
 
-/* 📌 En-tête */
+/* ===== Logo en haut à droite ===== */
+.logo {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 100px;
+    height: auto;
+    opacity: 0.8;
+    z-index: 2000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* ===== En-tête ===== */
 #myBooks {
     position: sticky;
     top: 0;
@@ -19,76 +35,111 @@ body {
 }
 
 .title {
-    font-size: 24px;
+    font-family: 'Tangerine', cursive;
+    font-size: 48px;
     background: #e8e8e8;
     padding: 15px;
     border-radius: 5px;
+    color: #333;
 }
 
-/* 📌 Formulaire */
-.h2 {
-    font-size: 20px;
-    margin-top: 10px;
-}
-
-form {
-    width: 60%;
-    margin: 20px auto;
-    text-align: left;
-    background: red;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    font-weight: bold;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
+/* ===== Boutons ===== */
 button {
-    padding: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+button:hover {
+    transform: scale(1.03);
+}
+
+/* Bouton Ajouter centré */
+#bt_add {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    font-weight: bold;
+    background-color: #198754;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ===== Formulaire de recherche ===== */
+#divformsearch {
+    width: 100%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch; /* très important pour 100% de largeur */
+}
+
+/* Champs de formulaire (titre, auteur...) */
+#divformsearch input[type="text"],
+#divformsearch input[type="search"],
+#divformsearch input[type="email"],
+#divformsearch input[type="number"] {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Conteneur des boutons (formulaire) */
+#divformsearch .button-row {
+    display: flex;
+    flex-direction: column; /* empile les boutons verticalement */
+    gap: 10px;
+    align-items: flex-start; /* les aligne à gauche */
+}
+
+/* Bouton Search */
+#bt_search {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
-}
-
-button:first-of-type {
-    background: #4f7c6d;
+    background-color: #4f8a80;
     color: white;
-    margin-right: 10px;
+    width: auto; /* Le bouton conserve sa taille d'origine */
 }
 
-button:last-of-type {
-    background: green;
+/* Bouton Cancel */
+#bt_cancel {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #d46550;
     color: white;
+    width: auto; /* Le bouton conserve sa taille d'origine */
 }
 
-/* 📌 Résultats de recherche */
-#content {
-    width: 80%;
-    margin: 40px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+
+/* Responsive formulaire */
+@media (max-width: 600px) {
+    #divformsearch .form-row {
+        flex-direction: column;
+    }
 }
 
-#content h2 {
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 5px;
-    text-align: center;
-}
-
-/* 📌 Grille pour afficher les livres */
+/* ===== Résultats ===== */
 #results {
     display: flex;
     flex-wrap: wrap;
@@ -97,7 +148,6 @@ button:last-of-type {
     margin-top: 20px;
 }
 
-/* 📌 Style des cartes de livres */
 .book {
     width: 45%;
     background: white;
@@ -107,9 +157,11 @@ button:last-of-type {
     text-align: left;
     display: flex;
     flex-direction: column;
+    position: relative;
     align-items: center;
 }
 
+/* Image dans livre */
 .book img {
     width: 100%;
     max-height: 150px;
@@ -128,6 +180,7 @@ button:last-of-type {
     text-align: center;
 }
 
+/* Bouton supprimer */
 .book button {
     background: #c74c3c;
     color: white;
@@ -135,27 +188,96 @@ button:last-of-type {
     margin-top: 10px;
 }
 
-#search-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: white;
-    padding: 15px 0;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000; 
+/* ===== Bouton Favori - Style drapeau vert en haut à droite ===== */
+.fav-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #198754;
+    color: white;
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px 5px 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
-#container {
-    display: flex;
-    flex-direction: column; /* Empile les éléments verticalement */
-    gap: 10px; /* Espace entre les éléments */
-    padding: 20px;
-  }
+.fav-button:hover,
+.fav-button.active {
+    background-color: #146c43;
+}
 
-/* 📌 Responsive */
+/* ===== Poch'List ===== */
+#pochList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.poch-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.poch-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.poch-list-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.poch-list-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.poch-list-info {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.poch-list-info h4 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.poch-list-info p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+#pochList button.delete-btn {
+    margin-top: 0.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#pochList h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* ===== Responsive global ===== */
 @media (max-width: 768px) {
-    #content {
+    #content, #pochList {
         width: 90%;
     }
 
@@ -166,5 +288,15 @@ button:last-of-type {
 
     .book {
         width: 90%;
+    }
+
+    .poch-list-item {
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .poch-list-item img {
+        margin-bottom: 10px;
     }
 }

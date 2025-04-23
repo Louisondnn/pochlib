@@ -1,93 +1,55 @@
-// que les Create et addListener
-// index.js button 
-// liste "resultats de recherche" button save 
-// liste Ma pochList avec  le button delete Session Storage 
-// add sessionStorage 
-
-
-
+import Search from './Search.js';
 
 class DomConstructor {
-  
-  constructor() {
-    this.myBooks = document.getElementById('myBooks');
-    this.content = document.createElement('div');
-    this.content.id = 'content';
-    if (document.body) {
-      document.body.appendChild(this.content);
-    } else {
-      console.error('L\'élément body n\'existe pas dans le DOM');
-    }  
-  }
-  
-  
-    
-      createSearchButton() {
-        const searchButton = document.createElement('button');
-        searchButton.textContent = 'Rechercher';
-        searchButton.id = 'bt_search';
-        this.content.appendChild(searchButton);
-        this.addSearchButtonEventListener();
-      }
-    
-      addSearchButtonEventListener() {
-        const searchButton = document.getElementById('bt_search');
-        searchButton.addEventListener('click', function(event) {
-          Search.clickForSearch(event);
-        });
-      }
 
+    createAddBookButton() {
+        const button = document.createElement('button');
+        button.id = 'bt_add';
+        button.textContent = 'Ajouter un livre';
+        button.style.display = 'block';
+    
+        const content = document.getElementById('content');
+        const myBooks = document.getElementById('myBooks');
+    
+        if (content && myBooks) {
+            myBooks.insertBefore(button, content);
+        }
+    
+        button.addEventListener('click', () => {
+            this.showSearchForm();
+        });
+    }
     
     createSearchForm() {
-      sessionStorage.setItem("clé", "valeur");
-      sessionStorage.getItem("clé");
-      var data = sessionStorage.getItem("clé");
-  
-      console.log(data);
-      console.log('test');
+        const form = document.createElement('div');
+        form.id = 'divformsearch';
+        form.style.display = 'none';
 
-      
+        form.innerHTML = `
+            <input id="title_book" type="text" placeholder="Titre du livre">
+            <input id="author" type="text" placeholder="Auteur">
+            <button id="bt_search">Rechercher</button>
+            <button id="bt_cancel">Annuler</button>
+        `;
 
-      const searchForm = document.createElement('form');
-      const container = document.getElementById('container');
-      console.log(container); // Vérifiez 
-        if (container) {
-        container.appendChild(searchForm);
-      } else {
-        console.error('Le container n\'existe pas dans le DOM');
-      }
-      const titleInput = document.createElement('input');
-      const authorInput = document.createElement('input');
-      titleInput.id = 'title_book';
-      authorInput.id = 'author';
-      titleInput.placeholder = 'Titre du livre';
-      authorInput.placeholder = 'Auteur du livre';
-      searchForm.appendChild(titleInput);
-      searchForm.appendChild(authorInput);
-      this.content.appendChild(searchForm);
+        const content = document.getElementById('content');
+        const myBooks = document.getElementById('myBooks');
+        
+        if (content && myBooks) {
+          myBooks.insertBefore(form, content);
+        }
+        document.getElementById('bt_search').addEventListener('click', Search.clickForSearch);
+        document.getElementById('bt_cancel').addEventListener('click', () => {
+            form.style.display = 'none';
+        });
     }
 
-
-  addDomElements() {
-    sessionStorage.setItem("clé", "valeur");
-    sessionStorage.getItem("clé");
-    var data = sessionStorage.getItem("clé");
-
-    console.log(data);
-    console.log('test');
-
-
-    const content = document.createElement('div');
-    content.id = 'content';
-    document.body.appendChild(content);
-  
-    const container = document.createElement('div');
-    container.id = 'container';
-    document.body.appendChild(container);
-  
-    this.createSearchForm();
-    this.createSearchButton();
-  }
+    showSearchForm() {
+        const form = document.getElementById('divformsearch');
+        if (form) {
+            form.style.display = 'block';
+        }
+    }
 }
 
 export default DomConstructor;
