@@ -9,15 +9,16 @@ body {
 
 /* ===== Logo en haut à droite ===== */
 .logo {
-    position: fixed;
+    position: absolute; /* Ajout nécessaire */
     top: 15px;
-    right: 15px;
+    right: 15px; /* Ajusté pour coller au coin droit */
     width: 100px;
     height: auto;
     opacity: 0.8;
     z-index: 2000;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
 .logo:hover {
     opacity: 1;
     transform: scale(1.05);

@@ -162,12 +162,3 @@ class Search {
 }
 
 export default Search;
-// mettre deux par deux recherche + pochlist 
-// Logo Poch List
-// centrer recherche
-// logo, croix 
-// auteur dans ma pochlist
-// police googlefonts 
-
-// penser img soutenance 
-// config logo dans search google
